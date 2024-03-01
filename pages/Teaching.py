@@ -3,6 +3,7 @@ import time
 import numpy as np
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
+from streamlit_image_select import image_select
 
 st.set_page_config(page_title="Teaching", page_icon="👨‍🏫👩‍🏫", initial_sidebar_state="collapsed")
 
@@ -41,6 +42,18 @@ st.sidebar.header("Plotting Demo")
 st.write(
     """This demo is going to make a PowerPoint Presentation based on any topic you want!
     Just input the topic you want, number of slides, and the audience you want your presentation for (e.g. middle school students), and you're ready to go!"""
+)
+
+
+img = image_select(
+    label="Select a template",
+    images=[
+        "images/Design-2.png",
+        "images/Design-4.png",
+        "images/Design-6.png",
+        "images/Design-7.png",
+    ],
+    captions=["Template 1", "Template 2", "Template 3", "Template 4"],
 )
 
 topic = st.text_input(label='Topic of Presentation', value='The Solar System 🌌🚀', placeholder="Topic Name")
