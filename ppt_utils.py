@@ -14,7 +14,7 @@ def create_layout(n_slides: int, audience: str, topic: str, openaikey: str):
   client = OpenAI(api_key=openaikey)
 
   response = client.chat.completions.create(
-    model="gpt-3.5-turbo-0125",
+    model="gpt-3.5-turbo-1106",
     response_format={ "type": "json_object" },
     messages=[
       {
@@ -44,7 +44,7 @@ def create_layout(n_slides: int, audience: str, topic: str, openaikey: str):
     client = OpenAI(api_key=openaikey)
 
     response = client.chat.completions.create(
-      model="gpt-3.5-turbo-0125",
+      model="gpt-3.5-turbo-1106",
       response_format={ "type": "json_object" },
       messages=[
         {
@@ -74,7 +74,7 @@ def create_content(slides_list_titles: dict, audience: str, openaikey: str):
   client = OpenAI(api_key=openaikey)
   
   response = client.chat.completions.create(
-      model="gpt-3.5-turbo-0125",
+      model="gpt-3.5-turbo-1106",
       response_format={ "type": "json_object" },
       messages=[
         {
@@ -103,7 +103,7 @@ def create_font_list(topic: str, audience: str, openaikey: str):
   client = OpenAI(api_key=openaikey)
 
   response = client.chat.completions.create(
-      model="gpt-3.5-turbo-0125",
+      model="gpt-3.5-turbo-1106",
       response_format={ "type": "json_object" },
       messages=[
         {

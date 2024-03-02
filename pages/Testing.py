@@ -93,10 +93,11 @@ with st.form('my_form'):
 
             st.toast('Your Question Sheet and Answer Sheet is ready for download!', icon='✔️')
 
+
 try:
-    answer_sheet = open("worksheets.zip", "r")
+    answer_sheet = open("worksheets.zip", "rb")
     #question_sheet = open(path_question_sheet, "rb")
     #st.download_button(label='Download your question sheet!', file_name=str(title + " - QUESTION SHEET" + '.docx'), data=question_sheet, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    st.download_button(label='Download your documents!', file_name=str(title + "Worksheets - TutorBuddy" + '.zip'), data=answer_sheet, mime="application/zip")
-except Exception as fnf_error:
-    print(fnf_error)
+    st.download_button(label='Download your documents!', file_name=str("Worksheets - TutorBuddy" + '.zip'), data=answer_sheet, mime="application/zip")
+except FileNotFoundError:
+    pass
