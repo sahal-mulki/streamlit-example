@@ -66,7 +66,7 @@ with st.form('my_form'):
     openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
     topic = st.text_input(label='Topic of Presentation', value='The Solar System 🌌🚀', placeholder="Topic Name")
     audience = st.text_input(label='Audience for Presentation', value='Middle-school students', placeholder="Who is this meant for?")
-    number_slides = st.slider("Number of Slides", 2, 15)
+    number_slides = st.slider("Number of Slides", 2, 7)
     submitted = st.form_submit_button('Make Presentation!')
 
     if not openaipass.startswith('sk-'):
