@@ -4,6 +4,9 @@ import numpy as np
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
 from streamlit_image_select import image_select
+from ppt_utils import *
+import os
+from stqdm import stqdm
 
 st.set_page_config(page_title="Teaching", page_icon="👨‍🏫👩‍🏫", initial_sidebar_state="collapsed")
 
@@ -45,22 +48,58 @@ st.write(
 )
 
 
-img = image_select(
-    label="Select a template",
-    images=[
-        "images/Design-2.png",
-        "images/Design-4.png",
-        "images/Design-6.png",
-        "images/Design-7.png",
-    ],
-    captions=["Template 1", "Template 2", "Template 3", "Template 4"],
-)
+with st.form('my_form'):
 
-topic = st.text_input(label='Topic of Presentation', value='The Solar System 🌌🚀', placeholder="Topic Name")
-audience = st.text_input(label='Audience for Presentation', value='Middle-school students', placeholder="Who is this meant for?")
-number_slides = st.slider("Number of Slides", 2, 15)
+    img = image_select(
+        label="Select a template",
+        images=[
+            "images/Design-2.png",
+            "images/Design-4.png",
+            "images/Design-6.png",
+            "images/Design-7.png",
+        ],
+        captions=["Template 1", "Template 2", "Template 3", "Template 4"],
+        return_value="index"
+    )
+
+    
+    openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
+    topic = st.text_input(label='Topic of Presentation', value='The Solar System 🌌🚀', placeholder="Topic Name")
+    audience = st.text_input(label='Audience for Presentation', value='Middle-school students', placeholder="Who is this meant for?")
+    number_slides = st.slider("Number of Slides", 2, 15)
+    submitted = st.form_submit_button('Make Presentation!')
+
+    if not openaipass.startswith('sk-'):
+        st.warning('Please enter your OpenAI API key!', icon='⚠')
+    if submitted and openaipass.startswith('sk-'):
+        with stqdm(total=100) as pbar:
+            pbar.update(5)
+            st.toast('Starting creation.', icon='✔️')
+            slides2 = create_layout(number_slides, topic, audience, openaipass)
+            pbar.update(30)
+            st.toast('Layout made, proceeding to content.', icon='📔')
+
+            slides_detailed = []
+            for slide in slides2:
+                pbar.update(3)
+                slides_detailed_ind = create_content(slides_list_titles=slide, audience=audience, openaikey=openaipass)
+                exec("slides_detailed.append(" + slides_detailed_ind + ")", globals())
+
+            st.toast('Content created, finding a font now.', icon='🎛️')
+            fonts = create_font_list(topic=topic, audience=audience, openaikey=openaipass)["fonts"]
+            pbar.update(20)
+            st.toast('Found an appropriate font, starting PowerPoint file creation!', icon='✔️')
+            final_slliii = format_slides(slides=slides2, slides_detailed=slides_detailed)
+            create_ppt(final_slliii, int(img), final_slliii[0]["title"], fonts)
+            st.toast('Your PowerPoint Presentation is ready for download!', icon='✔️')
+
+
+try:
+    pptx = open("generated-ppt/generated_presentation.pptx", "rb")
+    st.download_button(label='Download your presentation!', file_name=str(final_slliii[0]["title"] + ".pptx"), data=pptx, mime="application/vnd.ms-powerpoint")
+except:
+    pass
 
 # Streamlit widgets automatically run the script from top to bottom. Since
 # this button is not connected to any other logic, it just causes a plain
 # rerun.
-st.button("Re-run")
