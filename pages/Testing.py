@@ -6,7 +6,12 @@ from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
 from stqdm import stqdm
 from worksheet_utils import *
+from zipfile import ZipFile
+import os
 
+os.system("rm " + "generated-question-sheets/*.docx")
+os.system("rm " + "generated-answer-sheets/*.docx")
+os.system("rm " + "worksheets.zip")
 
 st.set_page_config(page_title="Testing", page_icon="🎓📝",
     initial_sidebar_state="collapsed")
@@ -77,12 +82,21 @@ with st.form('my_form'):
 
             path_answer_sheet = make_question_sheet(title, questions, questions_spaces)
             path_question_sheet = make_answer_sheet(title, questions, answers)
+
+            zipObj = ZipFile("worksheets.zip", "w")
+            # Add multiple files to the zip
+            zipObj.write(path_answer_sheet)
+            zipObj.write(path_question_sheet)
+            # close the Zip File
+            zipObj.close()
+
+
             st.toast('Your Question Sheet and Answer Sheet is ready for download!', icon='✔️')
 
 try:
-    answer_sheet = open(path_answer_sheet, "rb")
-    question_sheet = open(path_question_sheet, "rb")
-    st.download_button(label='Download your question sheet!', file_name=str(title + " - QUESTION SHEET" + '.docx'), data=question_sheet, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    st.download_button(label='Download your answer sheet!', file_name=str(title + " - ANSWER SHEET" + '.docx'), data=answer_sheet, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-except:
-    pass
+    answer_sheet = open("worksheets.zip", "r")
+    #question_sheet = open(path_question_sheet, "rb")
+    #st.download_button(label='Download your question sheet!', file_name=str(title + " - QUESTION SHEET" + '.docx'), data=question_sheet, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    st.download_button(label='Download your documents!', file_name=str(title + "Worksheets - TutorBuddy" + '.zip'), data=answer_sheet, mime="application/zip")
+except Exception as fnf_error:
+    print(fnf_error)

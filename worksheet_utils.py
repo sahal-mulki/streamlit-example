@@ -8,7 +8,7 @@ from docx.shared import Pt
 def create_worksheet_layout(topic: str, audience: str, n_questions: int, openaikey: str):
   client = OpenAI(api_key=openaikey)
 
-  prompt = """Make a layout for a question worksheet. Be sure to make it engaging and use interesting questions. ADD LINES OF SPACE FOR HOW MANY LINES THE QUESTION WOULD NEED FOR ANSWERING IN A PDF. FILL IN THE ANSWER FIELD WITH THE CORRECT ANSWER FOR THE QUESTION.
+  prompt = """Make a layout for a question worksheet. Be sure to make it engaging and use interesting, long questions. ADD LINES OF SPACE FOR HOW MANY LINES THE QUESTION WOULD NEED FOR ANSWERING IN A PDF. FILL IN THE ANSWER FIELD WITH THE CORRECT ANSWER FOR THE QUESTION.
               It should be in this format:
               {"questions": {"number": 1, "question": "What's a dog?", "answer": "A dog is an animal which......", "num-lines-for-space": "Number"}}
               ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. DO NOT USE EMOJIS OR ANY SPECIAL CHARACTERS. CREATE AS MANY QUESTIONS AS SPECIFIED."""
@@ -54,7 +54,7 @@ def process_output_worksheet(output: dict, n_questions: int):
   return questions, questions_spaces, answers
 
 def make_sheet_title(topic: str, audience: str, openaikey: str):
-  client = OpenAI(api_key="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")
+  client = OpenAI(api_key=openaikey)
 
   response = client.chat.completions.create(
     model="gpt-3.5-turbo-0125",
@@ -125,4 +125,4 @@ def make_answer_sheet(title: str, questions: list, answers: list):
 
   document.save(os.path.join('generated-answer-sheets/', str(title + " - ANSWER SHEET" + '.docx')))
 
-  return os.path.join('generated-answer-sheets/', str(title + " - ANSWER SHEET" + '.docx')))
+  return os.path.join('generated-answer-sheets/', str(title + " - ANSWER SHEET" + '.docx'))
