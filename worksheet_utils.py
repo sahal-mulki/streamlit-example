@@ -100,6 +100,8 @@ def make_question_sheet(title: str, questions: list, questions_spaces: list):
 
   document.save(os.path.join('generated-question-sheets/', str(title + " - QUESTION SHEET" + '.docx')))
 
+  return os.path.join('generated-question-sheets/', str(title + " - QUESTION SHEET" + '.docx'))
+
 def make_answer_sheet(title: str, questions: list, answers: list):
   document = Document()
 
@@ -122,3 +124,5 @@ def make_answer_sheet(title: str, questions: list, answers: list):
     document.add_paragraph("Answer: " + answers[poo])
 
   document.save(os.path.join('generated-answer-sheets/', str(title + " - ANSWER SHEET" + '.docx')))
+
+  return os.path.join('generated-answer-sheets/', str(title + " - ANSWER SHEET" + '.docx')))

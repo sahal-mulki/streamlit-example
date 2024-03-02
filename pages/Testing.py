@@ -5,6 +5,8 @@ from urllib.error import URLError
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
 from stqdm import stqdm
+from worksheet_utils import *
+
 
 st.set_page_config(page_title="Testing", page_icon="🎓📝",
     initial_sidebar_state="collapsed")
@@ -48,12 +50,10 @@ st.write(
 )
 
 with st.form('my_form'):
-
-
     openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
     topic = st.text_input(label='Topic of Worksheet', value='The Solar System 🌌🚀', placeholder="Topic Name")
     audience = st.text_input(label='Audience for Worksheet', value='Middle-school students', placeholder="Who is this meant for?")
-    number_slides = st.slider("Number of Questions", 2, 15)
+    number_questions = st.slider("Number of Questions", 2, 15)
     submitted = st.form_submit_button('Make Worksheet!')
 
     if not openaipass.startswith('sk-'):
@@ -62,21 +62,27 @@ with st.form('my_form'):
         with stqdm(total=100) as pbar:
             pbar.update(5)
             st.toast('Starting creation.', icon='✔️')
-            slides2 = create_layout(number_slides, topic, audience, openaipass)
+            questions = create_worksheet_layout(topic, audience, number_questions, openaipass)
+            pbar.update(50)
+            st.toast('Questions and answers made, proceeding to title.', icon='📔')
+
+            questions, questions_spaces, answers = process_output_worksheet(questions, number_questions)
+            title = make_sheet_title(topic, audience, openaipass)
+
             pbar.update(30)
-            st.toast('Layout made, proceeding to content.', icon='📔')
 
-            slides_detailed = []
-            for slide in slides2:
-                pbar.update(3)
-                slides_detailed_ind = create_content(slides_list_titles=slide, audience=audience, openaikey=openaipass)
-                exec("slides_detailed.append(" + slides_detailed_ind + ")", globals())
+            st.toast('Title created.', icon='🎛️')
 
-            st.toast('Content created, finding a font now.', icon='🎛️')
-            fonts = create_font_list(topic=topic, audience=audience, openaikey=openaipass)["fonts"]
-            pbar.update(20)
-            st.toast('Found an appropriate font, starting PowerPoint file creation!', icon='✔️')
-            final_slliii = format_slides(slides=slides2, slides_detailed=slides_detailed)
-            create_ppt(final_slliii, int(img), final_slliii[0]["title"], fonts)
-            st.toast('Your PowerPoint Presentation is ready for download!', icon='✔️')
+            st.toast('Starting Word file creation!', icon='✔️')
 
+            path_answer_sheet = make_question_sheet(title, questions, questions_spaces)
+            path_question_sheet = make_answer_sheet(title, questions, answers)
+            st.toast('Your Question Sheet and Answer Sheet is ready for download!', icon='✔️')
+
+try:
+    answer_sheet = open(path_answer_sheet, "rb")
+    question_sheet = open(path_question_sheet, "rb")
+    st.download_button(label='Download your question sheet!', file_name=str(title + " - QUESTION SHEET" + '.docx'), data=question_sheet, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    st.download_button(label='Download your answer sheet!', file_name=str(title + " - ANSWER SHEET" + '.docx'), data=answer_sheet, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+except:
+    pass
