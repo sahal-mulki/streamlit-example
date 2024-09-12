@@ -19,7 +19,7 @@ def create_layout(n_slides: int, audience: str, topic: str, openaikey: str):
     messages=[
       {
         "role": "system",
-        "content": "Make a layout for a powerpoint. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. It should be in this format:\n{slides: {\n            {\"id\": \"slide1\", \"title\": \"Introduction\", \"content\": \"....\"},\n              {\"id\": \"slide2\", \"title\": \"Starter\", \"content\": \"......\"},\n              {\"id\": \"slide3\", \"title\": \"Explanation\", \"content\": ........\"}\n}\n            ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation.         "
+        "content": "Make a layout for a powerpoint. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. It should be in this format:\n{slides: {\n            {\"id\": \"slide1\", \"title\": \"Introduction\", \"content\": \"....\"},\n              {\"id\": \"slide2\", \"title\": \"Starter\", \"content\": \"......\"},\n              {\"id\": \"slide3\", \"title\": \"Explanation\", \"content\": ........\"}\n}\n            ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. Add definitions of ideas related to the topic. If the topic is math or physics related, add relevant formulae in a seperate slide. Explain step-by-step."
       },
       {
         "role": "user",
