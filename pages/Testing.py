@@ -55,7 +55,10 @@ st.write(
 )
 
 with st.form('my_form'):
-    openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
+    if os.getenv("OPEN_AI_KEY") == None:
+        openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
+    else:
+        openaipass = os.getenv("OPEN_AI_KEY")    
     topic = st.text_input(label='Topic of Worksheet', value='The Solar System 🌌🚀', placeholder="Topic Name")
     audience = st.text_input(label='Audience for Worksheet', value='Middle-school students', placeholder="Who is this meant for?")
     number_questions = st.slider("Number of Questions", 2, 15)

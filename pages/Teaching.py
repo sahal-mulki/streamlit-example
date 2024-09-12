@@ -63,7 +63,10 @@ with st.form('my_form'):
     )
 
     
-    openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
+    if os.getenv("OPEN_AI_KEY") == None:
+        openaipass = st.text_input(label='OpenAI Key', type="password", placeholder="Place your OpenAI key here.")
+    else:
+        openaipass = os.getenv("OPEN_AI_KEY")
     topic = st.text_input(label='Topic of Presentation', value='The Solar System 🌌🚀', placeholder="Topic Name")
     audience = st.text_input(label='Audience for Presentation', value='Middle-school students', placeholder="Who is this meant for?")
     number_slides = st.slider("Number of Slides", 2, 7)
