@@ -14,7 +14,7 @@ def create_worksheet_layout(topic: str, audience: str, n_questions: int, openaik
               ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. DO NOT USE EMOJIS OR ANY SPECIAL CHARACTERS. CREATE AS MANY QUESTIONS AS SPECIFIED."""
 
   response = client.chat.completions.create(
-    model="gpt-3.5-turbo-1106",
+    model="gpt-4o",
     response_format={ "type": "json_object" },
     messages=[
       {
