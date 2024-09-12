@@ -19,7 +19,7 @@ def create_layout(n_slides: int, audience: str, topic: str, openaikey: str):
     messages=[
       {
         "role": "system",
-        "content": "Make a layout for a powerpoint. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. It should be in this format:\n{slides: {\n            {\"id\": \"slide1\", \"title\": \"Introduction\", \"content\": \"....\"},\n              {\"id\": \"slide2\", \"title\": \"Starter\", \"content\": \"......\"},\n              {\"id\": \"slide3\", \"title\": \"Explanation\", \"content\": ........\"}\n}\n            ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. Add definitions of ideas related to the topic. If the topic is math or physics related, add relevant formulae in a seperate slide. Explain step-by-step."
+        "content": "Make a layout for a powerpoint. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. It should be in this format:\n{slides: {\n            {\"id\": \"slide1\", \"title\": \"Introduction\", \"content\": \"....\"},\n              {\"id\": \"slide2\", \"title\": \"Starter\", \"content\": \"......\"},\n              {\"id\": \"slide3\", \"title\": \"Explanation\", \"content\": ........\"}\n}\n            ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation."
       },
       {
         "role": "user",
@@ -49,7 +49,7 @@ def create_layout(n_slides: int, audience: str, topic: str, openaikey: str):
       messages=[
         {
           "role": "system",
-          "content": "Make a layout for a powerpoint. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. It should be in this format:\n{slides: {\n            {\"id\": \"slide1\", \"title\": \"Introduction\", \"content\": \"....\"},\n              {\"id\": \"slide2\", \"title\": \"Starter\", \"content\": \"......\"},\n              {\"id\": \"slide3\", \"title\": \"Explanation\", \"content\": ........\"}\n}\n            ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. Add definitions of ideas related to the topic. If the topic is math or physics related, add relevant formulae in a seperate slide. Explain step-by-step."
+          "content": "Make a layout for a powerpoint. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. It should be in this format:\n{slides: {\n            {\"id\": \"slide1\", \"title\": \"Introduction\", \"content\": \"....\"},\n              {\"id\": \"slide2\", \"title\": \"Starter\", \"content\": \"......\"},\n              {\"id\": \"slide3\", \"title\": \"Explanation\", \"content\": ........\"}\n}\n            ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation."
         },
         {
           "role": "user",
@@ -81,7 +81,7 @@ def create_content(slides_list_titles: dict, audience: str, openaikey: str):
           "role": "system",
           "content": """"Give me text to put in a presentation slide.  Give me one large-sized paragraph per slide. Be sure to make it engaging and use emojis. Use some slides for questions and tasks. Provide your answer in this format:
                   {content: "................................"}
-                  ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. Give me one large-sized paragraph per slide. Add definitions of ideas related to the topic. If the topic is math or physics related, add relevant formulae in a seperate slide. Explain step-by-step.
+                  ADHERE TO THE JSON FORMAT AND DO NOT PROVIDE ANY ADDITIONAL INFORMATION. Do not use any controversial or political statements in the presentation. Give me one large-sized paragraph per slide.
               """
         },
         {
