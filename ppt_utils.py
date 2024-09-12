@@ -14,7 +14,7 @@ def create_layout(n_slides: int, audience: str, topic: str, openaikey: str):
   client = OpenAI(api_key=openaikey)
 
   response = client.chat.completions.create(
-    model="gpt-3.5-turbo-1106",
+    model="gpt-4o",
     response_format={ "type": "json_object" },
     messages=[
       {
